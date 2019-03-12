@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+
+<div ng-app="">
+  <p>Name : <input type="text" ng-model="name"></p>
+  <h1>Hello {{name}}</h1>
+</div>
+
+
+<div ng-app="myApp" ng-controller="myCtrl">
+
+<select ng-model="selectedName" ng-options="x for x in names">
+</select>
+
+</div>
+
+<div ng-app="myApp" ng-controller="customersCtrl">
+
+<table>
+  <tr ng-repeat="x in names">
+    <td>{{ x.Name }}</td>
+    <td>{{ x.Country }}</td>
+  </tr>
+</table>
+
+</div>
+<div ng-app="myApp" ng-controller="myCtrl">
+  Name: <input ng-model="name">
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+  $scope.names = ["Emil", "Tobias", "Linus"];
+});
+
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+  $http.get("customers.php")
+  .then(function (response) {$scope.names = response.data.records;});
+});
+
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+  $scope.name = "John Doe";
+});
+
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $location) {
+    $scope.myUrl = $location.absUrl();
+}); 
+</script>
+
+
+</body>
+</html> 
